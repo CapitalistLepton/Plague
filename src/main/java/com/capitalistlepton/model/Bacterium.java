@@ -8,18 +8,14 @@ import java.util.Random;
 public class Bacterium {
 
     private static final Random rand = new Random();
+    private static final float mutationRate = 0.99f;
 
     private int x;
     private int y;
     private String genotype;
 
     public Bacterium(String parentGenotype, int x, int y) {
-        float mutation = rand.nextFloat();
-        if (mutation > 0.99f) {
-            genotype = "AABBCc";
-        } else {
-            genotype = parentGenotype;
-        }
+        this.genotype = generateGenotype(parentGenotype);
         this.x = x;
         this.y = y;
     }
@@ -27,4 +23,23 @@ public class Bacterium {
     public int getX() { return x; }
     public int getY() { return y; }
     public String getGenotype() { return genotype; }
+
+    private static String generateGenotype(String parentGenotype) {
+        StringBuilder gen = new StringBuilder(parentGenotype);
+        for (int i = 0; i < parentGenotype.length(); i += 2) {
+            if (rand.nextFloat() > mutationRate) {
+                if (rand.nextFloat() > 0.75f) {
+                    gen.setCharAt(i, Character.toLowerCase(gen.charAt(i)));
+                    gen.setCharAt(i+1, Character.toLowerCase(gen.charAt(i+1)));
+                } else if(rand.nextFloat() > 0.5f) {
+                    gen.setCharAt(i, Character.toTitleCase(gen.charAt(i)));
+                    gen.setCharAt(i+1, Character.toLowerCase(gen.charAt(i+1)));
+                } else {
+                    gen.setCharAt(i, Character.toUpperCase(gen.charAt(i)));
+                    gen.setCharAt(i+1, Character.toUpperCase(gen.charAt(i+1)));
+                }
+            }
+        }
+        return gen.toString();
+    }
 }
