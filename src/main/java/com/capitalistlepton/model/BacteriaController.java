@@ -44,7 +44,8 @@ public class BacteriaController {
 
     public void useAntibiotic(Antibiotic a) {
         for (int i = 0; i < bacteria.size(); i++) {
-            if (rand.nextFloat() < a.effectiveness() && bacteria.get(i).getGenotype().equals(a.targetGenotype())) {
+            if (rand.nextFloat() < a.effectiveness()
+                    && a.targetGenotype().matcher(bacteria.get(i).getGenotype()).matches()) {
                 bacteria.remove(i);
                 i--;
             }
