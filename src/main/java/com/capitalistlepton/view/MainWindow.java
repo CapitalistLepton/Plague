@@ -1,5 +1,7 @@
 package com.capitalistlepton.view;
 
+import com.capitalistlepton.Plague;
+import com.capitalistlepton.model.Antibiotic;
 import com.capitalistlepton.model.BacteriaController;
 
 import javax.swing.*;
@@ -14,12 +16,13 @@ public class MainWindow extends JFrame {
     private static final int WINDOW_Y = 100;
     private static final int WINDOW_WIDTH = 1000;
     private static final int WINDOW_HEIGHT = 600;
+    private static final Color BACKGROUND = new Color(0x404446);
 
     private JPanel bacteria;
     private JPanel stats;
     private JPanel controlBar;
 
-    public MainWindow(BacteriaController con, boolean fullscreen) {
+    public MainWindow(BacteriaController con, Plague instance, boolean fullscreen) {
         if (fullscreen) {
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
             this.setUndecorated(true);
@@ -29,6 +32,7 @@ public class MainWindow extends JFrame {
         }
 
         Container pane = this.getContentPane();
+        pane.setBackground(BACKGROUND);
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
@@ -43,7 +47,7 @@ public class MainWindow extends JFrame {
         pane.add(bacteria, c);
 
         stats = new StatsPanel(con);
-        stats.setBackground(new Color(0x404446));
+        stats.setBackground(BACKGROUND);
         c.weightx = 0.2;
         c.gridheight = 2;
         c.gridx = 1;
@@ -51,7 +55,11 @@ public class MainWindow extends JFrame {
         pane.add(stats, c);
 
         controlBar = new JPanel();
-        controlBar.setBackground(new Color(0xff0000));
+        for (Antibiotic a : Antibiotic.values()) {
+            AntibioticCheckBox check = new AntibioticCheckBox(a, instance);
+            controlBar.add(check);
+        }
+        controlBar.setBackground(BACKGROUND);
         c.weightx = 0.8;
         c.weighty = 0.1;
         c.gridx = 0;
