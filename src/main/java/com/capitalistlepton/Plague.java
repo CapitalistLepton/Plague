@@ -24,7 +24,7 @@ public class Plague implements ItemListener {
 
     public static void main(String[] args) {
         BacteriaController con = new BacteriaController();
-        Plague p = new Plague(con, 5000);
+        Plague p = new Plague(con, 500);
         MainWindow window = new MainWindow(con, p, false);
         try {
             while (p.turn()) {
@@ -43,14 +43,14 @@ public class Plague implements ItemListener {
     }
 
     public boolean turn() {
-        if (con.bacteriaCount() < 1300 && con.bacteriaCount() > 0) {
+        if (con.bacteriaCount() < 1300 && con.bacteriaCount() > 0 && funds > 0) {
             con.replicate();
             for (Antibiotic activeAntibiotic : activeAntibiotics) {
                 con.useAntibiotic(activeAntibiotic);
-                // TODO: subtract funds for antibiotic
+                funds -= activeAntibiotic.cost();
             }
         }
-        return con.bacteriaCount() < 1300 && con.bacteriaCount() > 0;
+        return con.bacteriaCount() < 1300 && con.bacteriaCount() > 0 && funds > 0;
     }
 
     public void itemStateChanged(ItemEvent e) {
