@@ -7,7 +7,11 @@ import java.util.regex.Pattern;
  */
 public enum Antibiotic {
 
-    PENECILIN("Pencilin", 8, 0.45f, Pattern.compile("^[a-zA-Z]{4}CC$"));
+    AMOXICILIN("Amoxicilin", 8, 0.45f, Pattern.compile("^[a-zA-Z]{4}CC$")),
+    DOXYCYCLINE("Doxycycline", 40, 0.5f, Pattern.compile("^AA[a-zA-Z]{4}$")),
+    TETRACYCLINE("Tetracycline", 60, 0.55f, Pattern.compile("^Aa[a-zA-Z]{4}$")),
+    GENTAMICIN("Gentamicin", 100, 0.73f, Pattern.compile("^[a-zA-Z]{2}[a-z]{2}[a-zA-Z]{2}$"))
+    ;
 
     private final String label;
     private final int cost;
