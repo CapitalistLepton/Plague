@@ -5,8 +5,6 @@ import com.capitalistlepton.model.BacteriaController;
 import com.capitalistlepton.view.AntibioticCheckBox;
 import com.capitalistlepton.view.MainWindow;
 
-import javax.swing.*;
-
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -31,8 +29,15 @@ public class Plague implements ItemListener {
                 window.repaint();
                 sleep(1000);
             }
+            // Display the final scene where the game is either won or lost.
+            window.repaint();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+        if (p.won()) {
+            window.displayMessage("Won!");
+        } else {
+            window.displayMessage("Lost :(");
         }
     }
 
@@ -51,6 +56,10 @@ public class Plague implements ItemListener {
             }
         }
         return con.bacteriaCount() < 1300 && con.bacteriaCount() > 0 && funds > 0;
+    }
+
+    public int funds() {
+        return funds;
     }
 
     public void itemStateChanged(ItemEvent e) {

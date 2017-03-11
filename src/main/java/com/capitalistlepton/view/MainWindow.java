@@ -18,7 +18,7 @@ public class MainWindow extends JFrame {
     private static final int WINDOW_HEIGHT = 600;
     private static final Color BACKGROUND = new Color(0x404446);
 
-    private JPanel bacteria;
+    private BacteriaPanel bacteria;
     private JPanel stats;
     private JPanel controlBar;
 
@@ -61,10 +61,16 @@ public class MainWindow extends JFrame {
         }
         controlBar.setBackground(BACKGROUND);
         c.weightx = 0.8;
-        c.weighty = 0.1;
+        c.weighty = 0.01;
         c.gridx = 0;
         c.gridy = 1;
         pane.add(controlBar, c);
+
+        JPanel money = new FundsPanel(instance);
+        money.setBackground(Color.BLACK);
+        c.gridx = 1;
+        c.gridy = 1;
+        pane.add(money, c);
 
         this.setVisible(true);
     }
@@ -73,5 +79,9 @@ public class MainWindow extends JFrame {
     public void repaint() {
         super.repaint();
         bacteria.repaint();
+    }
+
+    public void displayMessage(String message) {
+        bacteria.writeMessage(message);
     }
 }

@@ -15,6 +15,7 @@ public class BacteriaPanel extends JPanel {
     private static final int yRes = 480;
 
     private BacteriaController bacteriaController;
+    private String message;
 
     public BacteriaPanel(BacteriaController con) {
         bacteriaController = con;
@@ -35,19 +36,31 @@ public class BacteriaPanel extends JPanel {
         int maxY = getHeight() - yMargin;
         int[] bounds = {minX, maxX, minY, maxY};
 
+        g.setColor(new Color(0xFF2662));
         for (Bacterium b: bacteriaController.getBacteriaList()) {
             drawBacterium(g, bounds, b.getX(), b.getY());
+        }
+
+        if (message != null) {
+            g.setFont(new Font("Menlo", Font.PLAIN, 32));
+            g.setColor(Color.WHITE);
+            ((Graphics2D)g).setRenderingHint(
+                    RenderingHints.KEY_TEXT_ANTIALIASING,
+                    RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            g.drawString(message, (minX+maxX)/2 - 40, (minY+maxY)/2);
         }
     }
 
 
     private void drawBacterium(Graphics g, int[] bounds, int x, int y) {
-        Color temp = g.getColor();
-        g.setColor(new Color(0xFF2662));
-        if (x +  bounds[0] < bounds[1] && y + bounds[2] < bounds[3]) {
+        if (x + bounds[0] < bounds[1] && y + bounds[2] < bounds[3]) {
             // NOTE: The width and height parameters are currently set to match 640x480 resolution
             g.fillRect(x + bounds[0], y + bounds[2], 4, 4);
         }
-        g.setColor(temp);
+    }
+
+    public void writeMessage(String message) {
+        this.message = message;
+        repaint();
     }
 }
