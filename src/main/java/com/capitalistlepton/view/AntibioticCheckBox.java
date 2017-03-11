@@ -1,6 +1,7 @@
 package com.capitalistlepton.view;
 
 import com.capitalistlepton.Plague;
+import com.capitalistlepton.PlagueConstants;
 import com.capitalistlepton.model.Antibiotic;
 
 import javax.swing.*;
@@ -9,13 +10,13 @@ import java.awt.*;
 /**
  * Created by zanelittrell on 3/10/17.
  */
-public class AntibioticCheckBox extends JCheckBox {
+public class AntibioticCheckBox extends JCheckBox implements PlagueConstants {
 
     private Antibiotic anti;
 
     public AntibioticCheckBox(Antibiotic a, Plague instance) {
         super(a.label() + ": $" + a.cost());
-        this.setFont(new Font("Menlo", Font.PLAIN, 12));
+        this.setFont(GAME_FONT);
         this.setForeground(Color.WHITE);
         this.addItemListener(instance);
         this.anti = a;

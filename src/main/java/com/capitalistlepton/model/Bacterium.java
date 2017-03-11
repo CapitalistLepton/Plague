@@ -8,7 +8,8 @@ import java.util.Random;
 public class Bacterium {
 
     private static final Random rand = new Random();
-    private static final float mutationRate = 0.99f;
+    /** The inverse of the rate of mutation (1 - rate of mutation). */
+    private static final float RATE_OF_MUTATION = 0.99f;
 
     private int x;
     private int y;
@@ -27,7 +28,7 @@ public class Bacterium {
     private static String generateGenotype(String parentGenotype) {
         StringBuilder gen = new StringBuilder(parentGenotype);
         for (int i = 0; i < parentGenotype.length(); i += 2) {
-            if (rand.nextFloat() > mutationRate) {
+            if (rand.nextFloat() > RATE_OF_MUTATION) {
                 if (rand.nextFloat() > 0.75f) {
                     gen.setCharAt(i, Character.toLowerCase(gen.charAt(i)));
                     gen.setCharAt(i+1, Character.toLowerCase(gen.charAt(i+1)));

@@ -1,5 +1,6 @@
 package com.capitalistlepton.view;
 
+import com.capitalistlepton.PlagueConstants;
 import com.capitalistlepton.model.BacteriaController;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.util.Map;
 /**
  * Created by zanelittrell on 3/6/17.
  */
-public class StatsPanel extends JPanel{
+public class StatsPanel extends JPanel implements PlagueConstants {
 
     private BacteriaController bacteriaController;
     private int lastCount;
@@ -26,10 +27,9 @@ public class StatsPanel extends JPanel{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Graphics2D g2d = (Graphics2D)g;
-        g.setFont(new Font("Menlo", Font.PLAIN, 12));
+        g.setFont(GAME_FONT);
         g.setColor(Color.WHITE);
-        g2d.setRenderingHint(
+        ((Graphics2D)g).setRenderingHint(
                 RenderingHints.KEY_TEXT_ANTIALIASING,
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 

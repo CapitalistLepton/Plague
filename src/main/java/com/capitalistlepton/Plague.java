@@ -14,20 +14,20 @@ import static java.lang.Thread.sleep;
 /**
  * Created by zanelittrell on 2/3/17.
  */
-public class Plague implements ItemListener {
+public class Plague implements ItemListener, PlagueConstants {
 
     private ArrayList<Antibiotic> activeAntibiotics;
     private int funds;
     private BacteriaController con;
 
     public static void main(String[] args) {
-        BacteriaController con = new BacteriaController();
-        Plague p = new Plague(con, 500);
+        BacteriaController con = new BacteriaController(STARTING_BACTERIA, STARTING_GENOTYPE);
+        Plague p = new Plague(con, STARTING_FUNDS);
         MainWindow window = new MainWindow(con, p, false);
         try {
             while (p.turn()) {
                 window.repaint();
-                sleep(1000);
+                sleep(WAIT_BETWEEN_TURNS);
             }
             // Display the final scene where the game is either won or lost.
             window.repaint();
@@ -48,14 +48,14 @@ public class Plague implements ItemListener {
     }
 
     public boolean turn() {
-        if (con.bacteriaCount() < 1300 && con.bacteriaCount() > 0 && funds > 0) {
+        if (con.bacteriaCount() < MAX_BACTERIA && con.bacteriaCount() > 0 && funds > 0) {
             con.replicate();
             for (Antibiotic activeAntibiotic : activeAntibiotics) {
                 con.useAntibiotic(activeAntibiotic);
                 funds -= activeAntibiotic.cost();
             }
         }
-        return con.bacteriaCount() < 1300 && con.bacteriaCount() > 0 && funds > 0;
+        return con.bacteriaCount() < MAX_BACTERIA && con.bacteriaCount() > 0 && funds > 0;
     }
 
     public int funds() {

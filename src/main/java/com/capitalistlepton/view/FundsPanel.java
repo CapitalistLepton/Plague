@@ -1,6 +1,7 @@
 package com.capitalistlepton.view;
 
 import com.capitalistlepton.Plague;
+import com.capitalistlepton.PlagueConstants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +9,7 @@ import java.awt.*;
 /**
  * Created by zanelittrell on 3/10/17.
  */
-public class FundsPanel extends JPanel {
+public class FundsPanel extends JPanel implements PlagueConstants{
 
     private Plague instance;
 
@@ -20,10 +21,9 @@ public class FundsPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        Graphics2D g2d = (Graphics2D)g;
-        g.setFont(new Font("Menlo", Font.PLAIN, 12));
+        g.setFont(GAME_FONT);
         g.setColor(Color.WHITE);
-        g2d.setRenderingHint(
+        ((Graphics2D)g).setRenderingHint(
                 RenderingHints.KEY_TEXT_ANTIALIASING,
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 

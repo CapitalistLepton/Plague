@@ -1,5 +1,7 @@
 package com.capitalistlepton.model;
 
+import com.capitalistlepton.PlagueConstants;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,17 +10,16 @@ import java.util.Random;
 /**
  * Created by zanelittrell on 2/5/17.
  */
-public class BacteriaController {
+public class BacteriaController implements PlagueConstants {
 
     private ArrayList<Bacterium> bacteria;
     private Random rand;
 
-    public BacteriaController() {
+    public BacteriaController(int initialBacteria, String startingGenotype) {
         bacteria = new ArrayList<Bacterium>();
         rand = new Random();
-        for (int i = 0; i < 50; i++) {
-            // TODO add some kind of constant
-            bacteria.add(new Bacterium("AABBCC", rand.nextInt(640), rand.nextInt(480)));
+        for (int i = 0; i < initialBacteria; i++) {
+            bacteria.add(new Bacterium(startingGenotype, rand.nextInt(X_RESOLUTION), rand.nextInt(Y_RESOLUTION)));
         }
     }
 
@@ -35,7 +36,7 @@ public class BacteriaController {
             // Replicate 10% chance for each bacterium
             if(rand.nextFloat() < 0.1f) {
                 Bacterium b = bacteria.get(i);
-                Bacterium ba = new Bacterium(b.getGenotype(), rand.nextInt(640), rand.nextInt(480));
+                Bacterium ba = new Bacterium(b.getGenotype(), rand.nextInt(X_RESOLUTION), rand.nextInt(Y_RESOLUTION));
                 bacteria.add(ba);
                 i--;
             }
