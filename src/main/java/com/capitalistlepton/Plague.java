@@ -40,6 +40,21 @@ public class Plague implements ItemListener, PlagueConstants {
             window.displayMessage("Lost :(");
         }
     }
+    public static void reset(){
+        Object[]  options = {"Yes, I must try again", "I quit!"};
+        int choice =  JOptionPane.showOptionDialog(null, " Shall we play again?", "Plague",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1] );
+        if (choice==0){
+            newGame();
+        }
+        else{
+            System.exit(0);
+        }
+
+    }
+    public static void newGame(){
+        
+    }
 
     public Plague(BacteriaController con, int funds) {
         this.activeAntibiotics = new ArrayList<Antibiotic>();
