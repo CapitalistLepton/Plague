@@ -5,8 +5,8 @@ import com.capitalistlepton.model.BacteriaController;
 import com.capitalistlepton.view.AntibioticCheckBox;
 import com.capitalistlepton.view.MainWindow;
 
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import javax.swing.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
@@ -20,12 +20,29 @@ public class Plague implements ItemListener, PlagueConstants {
     private int funds;
     private BacteriaController con;
 
+    private static BacteriaController controller;
+    private static Plague p;
+    private static MainWindow window;
+    private static boolean interrupt;
+
     public static void main(String[] args) {
-        BacteriaController con = new BacteriaController(STARTING_BACTERIA, STARTING_GENOTYPE);
-        Plague p = new Plague(con, STARTING_FUNDS);
-        MainWindow window = new MainWindow(con, p, false);
+        while (true)
+            runGame();
+    }
+
+    public static void runGame() {
+        controller = new BacteriaController(STARTING_BACTERIA, STARTING_GENOTYPE);
+        p = new Plague(controller, STARTING_FUNDS);
+        if (window == null) {
+            window = new MainWindow(controller, p, FULL_SCREEN);
+        } else {
+            window.reset(controller, p);
+//            window.dispose();
+//            window = new MainWindow(null,null, false);
+        }
+        interrupt = false;
         try {
-            while (p.turn()) {
+            while (p.turn() && !interrupt) {
                 window.repaint();
                 sleep(WAIT_BETWEEN_TURNS);
             }
@@ -39,21 +56,6 @@ public class Plague implements ItemListener, PlagueConstants {
         } else {
             window.displayMessage("Lost :(");
         }
-    }
-    public static void reset(){
-        Object[]  options = {"Yes, I must try again", "I quit!"};
-        int choice =  JOptionPane.showOptionDialog(null, " Shall we play again?", "Plague",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1] );
-        if (choice==0){
-            newGame();
-        }
-        else{
-            System.exit(0);
-        }
-
-    }
-    public static void newGame(){
-        
     }
 
     public Plague(BacteriaController con, int funds) {
@@ -89,4 +91,31 @@ public class Plague implements ItemListener, PlagueConstants {
     public boolean won() {
         return con.bacteriaCount() == 0;
     }
+
+    public static class RestartPlague extends AbstractAction {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            interrupt = true;
+            runGame();
+        }
+    }
+
+//    @Override
+//    public void keyTyped(KeyEvent e) {}
+//
+//    @Override
+//    public void keyPressed(KeyEvent e) {}
+//
+//    @Override
+//    public void keyReleased(KeyEvent e) {
+//        switch (e.getKeyChar()) {
+//            case 'q': System.exit(0);
+//            case 'r': {
+//                this.con = new BacteriaController(STARTING_BACTERIA, STARTING_GENOTYPE);
+//                this.funds = STARTING_FUNDS;
+//                this.activeAntibiotics.clear();
+//            };
+//        }
+//    }
 }

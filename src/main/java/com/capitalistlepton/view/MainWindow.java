@@ -6,6 +6,7 @@ import com.capitalistlepton.model.BacteriaController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Created by zanelittrell on 2/3/17.
@@ -19,7 +20,7 @@ public class MainWindow extends JFrame {
     private static final Color BACKGROUND = new Color(0x404446);
 
     private BacteriaPanel bacteria;
-    private JPanel stats;
+    private StatsPanel stats;
     private JPanel controlBar;
 
     public MainWindow(BacteriaController con, Plague instance, boolean fullscreen) {
@@ -31,12 +32,18 @@ public class MainWindow extends JFrame {
             this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         }
 
+        JPanel money = generatePanels(con, instance);
+
+        this.setVisible(true);
+        money.requestFocus();
+    }
+
+    private JPanel generatePanels(BacteriaController con, Plague instance) {
         Container pane = this.getContentPane();
         pane.setBackground(BACKGROUND);
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
-
 
         bacteria = new BacteriaPanel(con);
         bacteria.setBackground(new Color(0x202020));
@@ -72,13 +79,35 @@ public class MainWindow extends JFrame {
         c.gridy = 1;
         pane.add(money, c);
 
-        this.setVisible(true);
+        money.getInputMap().put(KeyStroke.getKeyStroke("F2"),
+                "restart");
+        money.getActionMap().put("restart",
+                new Plague.RestartPlague());
+        money.getInputMap().put(KeyStroke.getKeyStroke("Q"),
+                "quit");
+        money.getActionMap().put("quit",
+                new AbstractAction() {
+                    public void actionPerformed(ActionEvent e) {
+                        System.exit(0);
+                    }
+                });
+
+        return money;
     }
 
-    @Override
-    public void repaint() {
-        super.repaint();
-        bacteria.repaint();
+//    @Override
+//    public void repaint() {
+//        super.repaint();
+//        bacteria.repaint();
+//    }
+
+    public void reset(BacteriaController con, Plague instance) {
+        getContentPane().removeAll();
+        getContentPane().revalidate();
+        revalidate();
+        JPanel money = generatePanels(con, instance);
+        setVisible(true);
+        money.requestFocus();
     }
 
     public void displayMessage(String message) {

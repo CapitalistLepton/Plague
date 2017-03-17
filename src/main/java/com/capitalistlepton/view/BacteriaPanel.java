@@ -49,6 +49,12 @@ public class BacteriaPanel extends JPanel implements PlagueConstants {
         }
     }
 
+    public void reset(BacteriaController con) {
+        bacteriaController = con;
+        removeAll();
+        revalidate();
+        repaint();
+    }
 
     private void drawBacterium(Graphics g, int[] bounds, int x, int y) {
         if (x + bounds[0] < bounds[1] && y + bounds[2] < bounds[3]) {

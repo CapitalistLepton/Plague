@@ -49,4 +49,9 @@ public class StatsPanel extends JPanel implements PlagueConstants {
         }
     }
 
+    public void reset(BacteriaController con) {
+        bacteriaController = con;
+        repaint();
+    }
+
 }
