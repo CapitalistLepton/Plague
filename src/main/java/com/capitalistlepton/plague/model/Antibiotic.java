@@ -1,4 +1,4 @@
-package com.capitalistlepton.model;
+package com.capitalistlepton.plague.model;
 
 import java.util.regex.Pattern;
 

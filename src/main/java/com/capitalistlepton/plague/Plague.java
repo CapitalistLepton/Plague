@@ -1,9 +1,9 @@
-package com.capitalistlepton;
+package com.capitalistlepton.plague;
 
-import com.capitalistlepton.model.Antibiotic;
-import com.capitalistlepton.model.Bacterium;
-import com.capitalistlepton.view.AntibioticCheckBox;
-import com.capitalistlepton.view.MainWindow;
+import com.capitalistlepton.plague.model.Antibiotic;
+import com.capitalistlepton.plague.model.Bacterium;
+import com.capitalistlepton.plague.view.MainWindow;
+import com.capitalistlepton.plague.view.AntibioticCheckBox;
 
 import javax.swing.*;
 import java.awt.event.*;

@@ -1,8 +1,8 @@
-package com.capitalistlepton.view;
+package com.capitalistlepton.plague.view;
 
-import com.capitalistlepton.Plague;
-import com.capitalistlepton.PlagueConstants;
-import com.capitalistlepton.model.Antibiotic;
+import com.capitalistlepton.plague.Plague;
+import com.capitalistlepton.plague.PlagueConstants;
+import com.capitalistlepton.plague.model.Antibiotic;
 
 import javax.swing.*;
 import java.awt.*;

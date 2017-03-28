@@ -1,4 +1,4 @@
-package com.capitalistlepton;
+package com.capitalistlepton.plague;
 
 import java.awt.*;
 
