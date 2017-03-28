@@ -148,11 +148,13 @@ public class Plague implements ItemListener {
     }
 
     public void restart() {
-        kill = true;
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (thread.isAlive()) {
+            kill = true;
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         this.bacteria = new ArrayList<Bacterium>(PlagueConstants.STARTING_BACTERIA);
         for (int i = 0; i < PlagueConstants.STARTING_BACTERIA; i++) {

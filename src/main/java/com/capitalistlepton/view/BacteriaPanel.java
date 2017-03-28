@@ -6,6 +6,7 @@ import com.capitalistlepton.model.Bacterium;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by zanelittrell on 2/3/17.
@@ -35,7 +36,9 @@ public class BacteriaPanel extends JPanel {
         int[] bounds = {minX, maxX, minY, maxY};
 
         g.setColor(new Color(0xFF2662));
-        for (Bacterium b: plague.getBacteriaList()) {
+        ArrayList<Bacterium> bacteriaList = plague.getBacteriaList();
+        for (int i = 0; i < bacteriaList.size(); i++) {
+            Bacterium b = bacteriaList.get(i);
             drawBacterium(g, bounds, b.getX(), b.getY());
         }
 
