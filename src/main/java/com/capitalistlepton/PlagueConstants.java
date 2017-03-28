@@ -10,6 +10,8 @@ public interface PlagueConstants {
     int X_RESOLUTION = 640;
     /** Number of pixels the bacteria can take up vertically in the bacteria panel. */
     int Y_RESOLUTION = 480;
+    /** Whether the game should be rendered in fullscreen or not. */
+    boolean FULL_SCREEN = false;
     /** Font used whenever text is displayed. */
     Font GAME_FONT = new Font("Menlo", Font.PLAIN, 12);
     /** Bigger version of <pre>GAME_FONT</pre>. */

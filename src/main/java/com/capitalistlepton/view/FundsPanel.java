@@ -9,7 +9,7 @@ import java.awt.*;
 /**
  * Created by zanelittrell on 3/10/17.
  */
-public class FundsPanel extends JPanel implements PlagueConstants{
+public class FundsPanel extends JPanel {
 
     private Plague instance;
 
@@ -21,7 +21,7 @@ public class FundsPanel extends JPanel implements PlagueConstants{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.setFont(GAME_FONT);
+        g.setFont(PlagueConstants.GAME_FONT);
         g.setColor(Color.WHITE);
         ((Graphics2D)g).setRenderingHint(
                 RenderingHints.KEY_TEXT_ANTIALIASING,

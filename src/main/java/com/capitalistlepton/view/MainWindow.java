@@ -2,10 +2,10 @@ package com.capitalistlepton.view;
 
 import com.capitalistlepton.Plague;
 import com.capitalistlepton.model.Antibiotic;
-import com.capitalistlepton.model.BacteriaController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Created by zanelittrell on 2/3/17.
@@ -19,10 +19,10 @@ public class MainWindow extends JFrame {
     private static final Color BACKGROUND = new Color(0x404446);
 
     private BacteriaPanel bacteria;
-    private JPanel stats;
+    private StatsPanel stats;
     private JPanel controlBar;
 
-    public MainWindow(BacteriaController con, Plague instance, boolean fullscreen) {
+    public MainWindow(Plague instance, boolean fullscreen) {
         if (fullscreen) {
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
             this.setUndecorated(true);
@@ -31,14 +31,19 @@ public class MainWindow extends JFrame {
             this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         }
 
+        generatePanels(instance);
+
+        this.setVisible(true);
+    }
+
+    private JPanel generatePanels(Plague instance) {
         Container pane = this.getContentPane();
         pane.setBackground(BACKGROUND);
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
 
-
-        bacteria = new BacteriaPanel(con);
+        bacteria = new BacteriaPanel(instance);
         bacteria.setBackground(new Color(0x202020));
         c.weightx = 0.8;
         c.weighty = 0.9;
@@ -46,7 +51,7 @@ public class MainWindow extends JFrame {
         c.gridy = 0;
         pane.add(bacteria, c);
 
-        stats = new StatsPanel(con);
+        stats = new StatsPanel(instance);
         stats.setBackground(BACKGROUND);
         c.weightx = 0.2;
         c.gridheight = 2;
@@ -72,16 +77,23 @@ public class MainWindow extends JFrame {
         c.gridy = 1;
         pane.add(money, c);
 
-        this.setVisible(true);
+        money.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F2"),
+                "restart");
+        money.getActionMap().put("restart",
+                new Plague.RestartPlague());
+        money.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("Q"),
+                "quit");
+        money.getActionMap().put("quit",
+                new AbstractAction() {
+                    public void actionPerformed(ActionEvent e) {
+                        System.exit(0);
+                    }
+                });
+
+        return money;
     }
 
-    @Override
-    public void repaint() {
-        super.repaint();
-        bacteria.repaint();
-    }
+    public void displayMessage(String message) { bacteria.writeMessage(message); }
 
-    public void displayMessage(String message) {
-        bacteria.writeMessage(message);
-    }
+    public void resetBacteriaPanel() { bacteria.clearMessage(); }
 }
