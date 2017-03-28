@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by zanelittrell on 3/6/17.
  */
-public class StatsPanel extends JPanel implements PlagueConstants {
+public class StatsPanel extends JPanel {
 
     private Plague plague;
     private int lastCount;
@@ -27,7 +27,7 @@ public class StatsPanel extends JPanel implements PlagueConstants {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.setFont(GAME_FONT);
+        g.setFont(PlagueConstants.GAME_FONT);
         g.setColor(Color.WHITE);
         ((Graphics2D)g).setRenderingHint(
                 RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -47,11 +47,6 @@ public class StatsPanel extends JPanel implements PlagueConstants {
             g.drawString("[" + gs + ": " + genes.get(gs) + "]", 15, y);
             y += 20;
         }
-    }
-
-    public void reset(Plague plague) {
-        this.plague = plague;
-        repaint();
     }
 
 }

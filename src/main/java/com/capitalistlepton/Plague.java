@@ -23,57 +23,40 @@ public class Plague implements ItemListener {
     private ArrayList<Bacterium> bacteria;
     private Random rand;
     private int funds;
-//    private BacteriaModel bac;
 
-//    private static BacteriaModel bacteria;
-    private static Plague p;
+    private static Plague instance;
     private static MainWindow window;
-    private static boolean interrupt;
+    private static boolean kill;
+
+    private static volatile Thread thread;
 
     public static void main(String[] args) {
-//        bacteria = new BacteriaModel(PlagueConstants.STARTING_BACTERIA, PlagueConstants.STARTING_GENOTYPE);
-        p = new Plague(PlagueConstants.STARTING_FUNDS);
-        window = new MainWindow(p, PlagueConstants.FULL_SCREEN);
-        while (p.turn()) {
+        instance = new Plague(PlagueConstants.STARTING_FUNDS);
+        window = new MainWindow(instance, PlagueConstants.FULL_SCREEN);
+        thread = new Thread(() -> runGame());
+        thread.start();
+    }
+
+    private static void runGame() {
+        while (!kill && instance.turn()) {
             window.repaint();
             try {
                 sleep(PlagueConstants.WAIT_BETWEEN_TURNS);
-            } catch (InterruptedException e) { e.printStackTrace(); }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        if (p.won()) {
-            window.displayMessage("Won!");
+        if (kill) {
+            kill = false;
         } else {
-            window.displayMessage("Lost :(");
+            if (instance.won()) {
+                window.displayMessage("Won!");
+            } else {
+                window.displayMessage("Lost :(");
+            }
         }
     }
 
-//    public static void runGame() {
-//        bacteria = new BacteriaModel(STARTING_BACTERIA, STARTING_GENOTYPE);
-//        p = new Plague(bacteria, STARTING_FUNDS);
-//        if (window == null) {
-//            window = new MainWindow(bacteria, p, FULL_SCREEN);
-//        } else {
-//            window.reset(bacteria, p);
-////            window.dispose();
-////            window = new MainWindow(null,null, false);
-//        }
-//        interrupt = false;
-//        try {
-//            while (p.turn() && !interrupt) {
-//                window.repaint();
-//                sleep(WAIT_BETWEEN_TURNS);
-//            }
-//            // Display the final scene where the game is either won or lost.
-//            window.repaint();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        if (p.won()) {
-//            window.displayMessage("Won!");
-//        } else {
-//            window.displayMessage("Lost :(");
-//        }
-//    }
 
     public Plague(int funds) {
         this.activeAntibiotics = new ArrayList<Antibiotic>();
@@ -115,7 +98,7 @@ public class Plague implements ItemListener {
     public void replicate() {
         for (int i = 0; i < bacteria.size(); i++) {
             // Replicate 10% chance for each bacterium
-            if(rand.nextFloat() < 0.1f) {
+            if (rand.nextFloat() < 0.1f) {
                 Bacterium b = bacteria.get(i);
                 Bacterium ba = new Bacterium(b.getGenotype(),
                         rand.nextInt(PlagueConstants.X_RESOLUTION),
@@ -149,6 +132,7 @@ public class Plague implements ItemListener {
         return genotypes;
     }
 
+    // End BacteriaModel
 
     public void itemStateChanged(ItemEvent e) {
         AntibioticCheckBox check = (AntibioticCheckBox) e.getItemSelectable();
@@ -164,6 +148,12 @@ public class Plague implements ItemListener {
     }
 
     public void restart() {
+        kill = true;
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         this.bacteria = new ArrayList<Bacterium>(PlagueConstants.STARTING_BACTERIA);
         for (int i = 0; i < PlagueConstants.STARTING_BACTERIA; i++) {
             bacteria.add(new Bacterium(PlagueConstants.STARTING_GENOTYPE,
@@ -171,39 +161,16 @@ public class Plague implements ItemListener {
                     rand.nextInt(PlagueConstants.Y_RESOLUTION)));
         }
         this.funds = PlagueConstants.STARTING_FUNDS;
+        thread = new Thread(() -> runGame());
+        thread.start();
     }
 
     public static class RestartPlague extends AbstractAction {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            p.restart();
+            window.resetBacteriaPanel();
+            instance.restart();
         }
     }
-
-//    public class PlagueModel implements Runnable {
-//
-//        @Override
-//        public void run() {
-//
-//        }
-//    }
-
-//    @Override
-//    public void keyTyped(KeyEvent e) {}
-//
-//    @Override
-//    public void keyPressed(KeyEvent e) {}
-//
-//    @Override
-//    public void keyReleased(KeyEvent e) {
-//        switch (e.getKeyChar()) {
-//            case 'q': System.exit(0);
-//            case 'r': {
-//                this.bac = new BacteriaModel(STARTING_BACTERIA, STARTING_GENOTYPE);
-//                this.funds = STARTING_FUNDS;
-//                this.activeAntibiotics.clear();
-//            };
-//        }
-//    }
 }

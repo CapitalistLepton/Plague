@@ -10,7 +10,7 @@ import java.awt.*;
 /**
  * Created by zanelittrell on 2/3/17.
  */
-public class BacteriaPanel extends JPanel implements PlagueConstants {
+public class BacteriaPanel extends JPanel {
 
     private Plague plague;
     private String message;
@@ -23,8 +23,8 @@ public class BacteriaPanel extends JPanel implements PlagueConstants {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        int xMargin = (getWidth() - X_RESOLUTION) / 2;
-        int yMargin = (getHeight() - Y_RESOLUTION) / 2;
+        int xMargin = (getWidth() - PlagueConstants.X_RESOLUTION) / 2;
+        int yMargin = (getHeight() - PlagueConstants.Y_RESOLUTION) / 2;
 //        g.setColor(new Color(0x00ff00));
 //        g.fillRect(xMargin, yMargin, X_RESOLUTION, Y_RESOLUTION);
 
@@ -40,20 +40,13 @@ public class BacteriaPanel extends JPanel implements PlagueConstants {
         }
 
         if (message != null) {
-            g.setFont(BIG_GAME_FONT);
+            g.setFont(PlagueConstants.BIG_GAME_FONT);
             g.setColor(Color.WHITE);
             ((Graphics2D)g).setRenderingHint(
                     RenderingHints.KEY_TEXT_ANTIALIASING,
                     RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             g.drawString(message, (minX+maxX)/2 - 40, (minY+maxY)/2);
         }
-    }
-
-    public void reset(Plague plague) {
-        this.plague = plague;
-        removeAll();
-        revalidate();
-        repaint();
     }
 
     private void drawBacterium(Graphics g, int[] bounds, int x, int y) {
@@ -65,6 +58,11 @@ public class BacteriaPanel extends JPanel implements PlagueConstants {
 
     public void writeMessage(String message) {
         this.message = message;
+        repaint();
+    }
+
+    public void clearMessage() {
+        this.message = null;
         repaint();
     }
 }

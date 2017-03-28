@@ -31,10 +31,9 @@ public class MainWindow extends JFrame {
             this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         }
 
-        JPanel money = generatePanels(instance);
+        generatePanels(instance);
 
         this.setVisible(true);
-        money.requestFocus();
     }
 
     private JPanel generatePanels(Plague instance) {
@@ -78,11 +77,11 @@ public class MainWindow extends JFrame {
         c.gridy = 1;
         pane.add(money, c);
 
-        money.getInputMap().put(KeyStroke.getKeyStroke("F2"),
+        money.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F2"),
                 "restart");
         money.getActionMap().put("restart",
                 new Plague.RestartPlague());
-        money.getInputMap().put(KeyStroke.getKeyStroke("Q"),
+        money.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("Q"),
                 "quit");
         money.getActionMap().put("quit",
                 new AbstractAction() {
@@ -94,22 +93,7 @@ public class MainWindow extends JFrame {
         return money;
     }
 
-//    @Override
-//    public void repaint() {
-//        super.repaint();
-//        bacteria.repaint();
-//    }
+    public void displayMessage(String message) { bacteria.writeMessage(message); }
 
-//    public void reset(Plague instance) {
-//        getContentPane().removeAll();
-//        getContentPane().revalidate();
-//        revalidate();
-//        JPanel money = generatePanels(instance);
-//        setVisible(true);
-//        money.requestFocus();
-//    }
-
-    public void displayMessage(String message) {
-        bacteria.writeMessage(message);
-    }
+    public void resetBacteriaPanel() { bacteria.clearMessage(); }
 }
