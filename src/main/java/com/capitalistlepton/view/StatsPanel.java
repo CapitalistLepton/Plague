@@ -1,7 +1,7 @@
 package com.capitalistlepton.view;
 
+import com.capitalistlepton.Plague;
 import com.capitalistlepton.PlagueConstants;
-import com.capitalistlepton.model.BacteriaController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,12 +13,12 @@ import java.util.Map;
  */
 public class StatsPanel extends JPanel implements PlagueConstants {
 
-    private BacteriaController bacteriaController;
+    private Plague plague;
     private int lastCount;
     private DecimalFormat df;
 
-    public StatsPanel(BacteriaController con) {
-        bacteriaController = con;
+    public StatsPanel(Plague plague) {
+        this.plague = plague;
         lastCount = 1;
         df = new DecimalFormat("0.00000");
     }
@@ -33,7 +33,7 @@ public class StatsPanel extends JPanel implements PlagueConstants {
                 RenderingHints.KEY_TEXT_ANTIALIASING,
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-        int count = bacteriaController.bacteriaCount();
+        int count = plague.bacteriaCount();
         double lambda = ((double) count)/lastCount;
         lastCount = count;
 
@@ -41,7 +41,7 @@ public class StatsPanel extends JPanel implements PlagueConstants {
         g.drawString("Lambda: " + df.format(lambda), 10, 45);
 
         g.drawString("Genotypes:", 10, 65);
-        Map<String, Integer> genes = bacteriaController.getGenotypes();
+        Map<String, Integer> genes = plague.getGenotypes();
         int y = 85;
         for (String gs: genes.keySet()) {
             g.drawString("[" + gs + ": " + genes.get(gs) + "]", 15, y);
@@ -49,8 +49,8 @@ public class StatsPanel extends JPanel implements PlagueConstants {
         }
     }
 
-    public void reset(BacteriaController con) {
-        bacteriaController = con;
+    public void reset(Plague plague) {
+        this.plague = plague;
         repaint();
     }
 

@@ -1,7 +1,7 @@
 package com.capitalistlepton.view;
 
+import com.capitalistlepton.Plague;
 import com.capitalistlepton.PlagueConstants;
-import com.capitalistlepton.model.BacteriaController;
 import com.capitalistlepton.model.Bacterium;
 
 import javax.swing.*;
@@ -12,11 +12,11 @@ import java.awt.*;
  */
 public class BacteriaPanel extends JPanel implements PlagueConstants {
 
-    private BacteriaController bacteriaController;
+    private Plague plague;
     private String message;
 
-    public BacteriaPanel(BacteriaController con) {
-        bacteriaController = con;
+    public BacteriaPanel(Plague plague) {
+        this.plague = plague;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class BacteriaPanel extends JPanel implements PlagueConstants {
         int[] bounds = {minX, maxX, minY, maxY};
 
         g.setColor(new Color(0xFF2662));
-        for (Bacterium b: bacteriaController.getBacteriaList()) {
+        for (Bacterium b: plague.getBacteriaList()) {
             drawBacterium(g, bounds, b.getX(), b.getY());
         }
 
@@ -49,8 +49,8 @@ public class BacteriaPanel extends JPanel implements PlagueConstants {
         }
     }
 
-    public void reset(BacteriaController con) {
-        bacteriaController = con;
+    public void reset(Plague plague) {
+        this.plague = plague;
         removeAll();
         revalidate();
         repaint();

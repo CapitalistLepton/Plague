@@ -2,7 +2,6 @@ package com.capitalistlepton.view;
 
 import com.capitalistlepton.Plague;
 import com.capitalistlepton.model.Antibiotic;
-import com.capitalistlepton.model.BacteriaController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +22,7 @@ public class MainWindow extends JFrame {
     private StatsPanel stats;
     private JPanel controlBar;
 
-    public MainWindow(BacteriaController con, Plague instance, boolean fullscreen) {
+    public MainWindow(Plague instance, boolean fullscreen) {
         if (fullscreen) {
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
             this.setUndecorated(true);
@@ -32,20 +31,20 @@ public class MainWindow extends JFrame {
             this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         }
 
-        JPanel money = generatePanels(con, instance);
+        JPanel money = generatePanels(instance);
 
         this.setVisible(true);
         money.requestFocus();
     }
 
-    private JPanel generatePanels(BacteriaController con, Plague instance) {
+    private JPanel generatePanels(Plague instance) {
         Container pane = this.getContentPane();
         pane.setBackground(BACKGROUND);
         pane.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
 
-        bacteria = new BacteriaPanel(con);
+        bacteria = new BacteriaPanel(instance);
         bacteria.setBackground(new Color(0x202020));
         c.weightx = 0.8;
         c.weighty = 0.9;
@@ -53,7 +52,7 @@ public class MainWindow extends JFrame {
         c.gridy = 0;
         pane.add(bacteria, c);
 
-        stats = new StatsPanel(con);
+        stats = new StatsPanel(instance);
         stats.setBackground(BACKGROUND);
         c.weightx = 0.2;
         c.gridheight = 2;
@@ -101,14 +100,14 @@ public class MainWindow extends JFrame {
 //        bacteria.repaint();
 //    }
 
-    public void reset(BacteriaController con, Plague instance) {
-        getContentPane().removeAll();
-        getContentPane().revalidate();
-        revalidate();
-        JPanel money = generatePanels(con, instance);
-        setVisible(true);
-        money.requestFocus();
-    }
+//    public void reset(Plague instance) {
+//        getContentPane().removeAll();
+//        getContentPane().revalidate();
+//        revalidate();
+//        JPanel money = generatePanels(instance);
+//        setVisible(true);
+//        money.requestFocus();
+//    }
 
     public void displayMessage(String message) {
         bacteria.writeMessage(message);
