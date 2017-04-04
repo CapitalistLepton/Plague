@@ -16,7 +16,7 @@ jar {
     manifest {
         attributes('Implementation-Title': project.name,
                 'Implementation-Version': version,
-                'Main-Class': 'com.capitalistlepton.' + project.name,
+                'Main-Class': 'com.capitalistlepton.plague.' + project.name,
                 'Class-Path': '.')
     }
 //    archiveName = project.name + '.jar'
