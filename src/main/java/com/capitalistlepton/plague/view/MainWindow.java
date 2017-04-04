@@ -46,13 +46,8 @@ public class MainWindow extends JFrame {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.BOTH;
 
-        JPanel splash = new SplashPanel();
+        SplashPanel splash = new SplashPanel();
         splash.setBackground(PlagueConstants.LIGHT);
-//        JLabel logo = new JLabel("Plague");
-//        logo.setFont(PlagueConstants.BIG_GAME_FONT);
-//        splash.add(logo);
-//        // TODO: Must change this with the gradle file if possible.
-//        splash.add(new JLabel("v 0.0.1"));
         c.weightx = 0.9;
         c.weighty = 1;
         c.gridx = 0;
@@ -88,6 +83,12 @@ public class MainWindow extends JFrame {
         help.setBackground(PlagueConstants.DARK);
         help.setForeground(Color.WHITE);
         help.setFont(PlagueConstants.BIG_GAME_FONT);
+        help.setAction(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                splash.setState(SplashPanelState.TUTORIAL);
+            }
+        });
         help.setText("Help");
         menu.add(help);
 
@@ -98,6 +99,12 @@ public class MainWindow extends JFrame {
         scores.setBackground(PlagueConstants.DARK);
         scores.setForeground(Color.WHITE);
         scores.setFont(PlagueConstants.BIG_GAME_FONT);
+        scores.setAction(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                splash.setState(SplashPanelState.SCORES);
+            }
+        });
         scores.setText("High Scores");
         menu.add(scores);
 

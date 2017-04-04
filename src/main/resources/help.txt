@@ -1,0 +1,6 @@
+The goal of this game is to bring the bacteria population to 0. This can be achieved by using the antibiotics in the bottom bar. The antibiotics will be used each turn to kill a portion of the current bacteria. Different antibiotics are more effective against different genotypes of bacteria. Antibiotics cannot be used before turn 12 and the checkboxes will be deactivated until turn 12 has passed.
+
+Hotkeys:
+ - F2: Restarts the game
+ - Q: Quits the app
+ - 1-9: Selects/Unselects the corresponding slot on the antibiotic bar
