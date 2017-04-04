@@ -16,6 +16,14 @@ public interface PlagueConstants {
     Font GAME_FONT = new Font("Menlo", Font.PLAIN, 12);
     /** Bigger version of <pre>GAME_FONT</pre>. */
     Font BIG_GAME_FONT = new Font("Menlo", Font.PLAIN, 32);
+    /** Biggest font used for the logo. */
+    Font LOGO_FONT = new Font("Menlo", Font.PLAIN, 72);
+    /** The background color of the MainWindow. */
+    Color BACKGROUND = new Color(0x404446);
+    /** A slightly darker color than the background. */
+    Color DARK = new Color(0x2A2E30);
+    /** A slightly lighter color than the background. */
+    Color LIGHT = new Color(0x515F61);
 
     /** Number of bacteria that are generated at the beginning of the game. */
     int STARTING_BACTERIA = 50;
@@ -28,4 +36,6 @@ public interface PlagueConstants {
     int MAX_BACTERIA = 1300;
     /** The time in milliseconds between each turn in the game (must be > 100). */
     int WAIT_BETWEEN_TURNS = 1000;
+    /** The number of turns to wait before antibiotics are able to be applied. */
+    int WAIT_BEFORE_ANTIBIOTICS = 12;
 }
