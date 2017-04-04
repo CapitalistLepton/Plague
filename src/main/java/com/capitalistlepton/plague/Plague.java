@@ -23,6 +23,7 @@ public class Plague implements ItemListener {
     private ArrayList<Bacterium> bacteria;
     private Random rand;
     private int funds;
+    private int turnCount;
 
     private static Plague instance;
     private static MainWindow window;
@@ -39,6 +40,9 @@ public class Plague implements ItemListener {
 
     private static void runGame() {
         while (!kill && instance.turn()) {
+            if (instance.turnCount >= PlagueConstants.WAIT_BEFORE_ANTIBIOTICS) {
+                window.enableCheckBoxes(true);
+            }
             window.repaint();
             try {
                 sleep(PlagueConstants.WAIT_BETWEEN_TURNS);
@@ -46,6 +50,7 @@ public class Plague implements ItemListener {
                 e.printStackTrace();
             }
         }
+        window.enableCheckBoxes(false);
         if (kill) {
             kill = false;
         } else {
@@ -63,6 +68,7 @@ public class Plague implements ItemListener {
         this.funds = funds;
         this.bacteria = new ArrayList<Bacterium>(PlagueConstants.STARTING_BACTERIA);
         this.rand = new Random();
+        this.turnCount = 0;
         for (int i = 0; i < PlagueConstants.STARTING_BACTERIA; i++) {
             bacteria.add(new Bacterium(PlagueConstants.STARTING_GENOTYPE,
                     rand.nextInt(PlagueConstants.X_RESOLUTION),
@@ -73,9 +79,11 @@ public class Plague implements ItemListener {
     public boolean turn() {
         if (bacteriaCount() < PlagueConstants.MAX_BACTERIA && bacteriaCount() > 0 && funds > 0) {
             replicate();
-            for (Antibiotic activeAntibiotic : activeAntibiotics) {
-                useAntibiotic(activeAntibiotic);
-                funds -= activeAntibiotic.cost();
+            if (turnCount++ >= PlagueConstants.WAIT_BEFORE_ANTIBIOTICS) {
+                for (Antibiotic activeAntibiotic : activeAntibiotics) {
+                    useAntibiotic(activeAntibiotic);
+                    funds -= activeAntibiotic.cost();
+                }
             }
         }
         return bacteriaCount() < PlagueConstants.MAX_BACTERIA && bacteriaCount() > 0 && funds > 0;
@@ -142,6 +150,8 @@ public class Plague implements ItemListener {
             activeAntibiotics.remove(check.getAntibiotic());
         }
     }
+
+    public int getTurnCount() { return turnCount; }
 
     public boolean won() {
         return bacteriaCount() == 0;

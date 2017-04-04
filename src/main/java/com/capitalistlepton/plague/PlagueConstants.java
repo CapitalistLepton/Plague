@@ -28,4 +28,6 @@ public interface PlagueConstants {
     int MAX_BACTERIA = 1300;
     /** The time in milliseconds between each turn in the game (must be > 100). */
     int WAIT_BETWEEN_TURNS = 1000;
+    /** The number of turns to wait before antibiotics are able to be applied. */
+    int WAIT_BEFORE_ANTIBIOTICS = 12;
 }

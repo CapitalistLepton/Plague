@@ -39,10 +39,11 @@ public class StatsPanel extends JPanel {
 
         g.drawString("Number of bacteria: " + count, 10, 25);
         g.drawString("Lambda: " + df.format(lambda), 10, 45);
+        g.drawString("Turn: " + plague.getTurnCount(), 10, 65);
 
-        g.drawString("Genotypes:", 10, 65);
+        g.drawString("Genotypes:", 10, 85);
         Map<String, Integer> genes = plague.getGenotypes();
-        int y = 85;
+        int y = 105;
         for (String gs: genes.keySet()) {
             g.drawString("[" + gs + ": " + genes.get(gs) + "]", 15, y);
             y += 20;
