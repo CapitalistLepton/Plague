@@ -18,6 +18,7 @@ public class AntibioticCheckBox extends JCheckBox {
         super(a.label() + ": $" + a.cost());
         this.setFont(PlagueConstants.GAME_FONT);
         this.setForeground(Color.WHITE);
+        this.setBackground(PlagueConstants.BACKGROUND);
         this.addItemListener(instance);
         this.anti = a;
     }
