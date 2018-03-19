@@ -7,6 +7,10 @@ repositories {
     mavenCentral()
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.6' 
+}
+
 jar {
     from {
         (configurations.runtime).collect {
